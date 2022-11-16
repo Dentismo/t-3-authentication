@@ -5,7 +5,7 @@ const path = require('path');
 const cors = require('cors');
 const history = require('connect-history-api-fallback');
 const bodyParser = require("body-parser");
-const mqttHandler = require('./controller/mqtt-handler');
+const mqttHandler = require('./controller/mqttHandler');
 
 const mongoURI = 'mongodb://127.0.0.1:27017/dentistClinicDB';
 const port = 3008;
@@ -60,10 +60,6 @@ function addRoutesToApp(app) {
     app.get('/api', function (req, res) {
         res.json({ 'message': 'Welcome to your Distributed Systems Baby' });
     });
-
-    const loginController = require('./controller/loginController')
-    app.use(loginController)
-
     // Catch all non-error handler for api (i.e., 404 Not Found)
     app.use('/api/*', function (req, res) {
         res.status(404).json({ 'message': 'Endpoint Not Found' });

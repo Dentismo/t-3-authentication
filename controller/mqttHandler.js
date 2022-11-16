@@ -1,4 +1,5 @@
 const mqtt = require('mqtt');
+const LoginController = require('./loginController')
 
 class MqttHandler {
 constructor() {
@@ -6,6 +7,7 @@ constructor() {
     this.host = 'http://localhost:1883';
     this.username = 'YOUR_USER'; // mqtt credentials if these are needed to connect
     this.password = 'YOUR_PASSWORD';
+    this.loginController = new LoginController();
 }
 
 connect() {
@@ -28,14 +30,15 @@ connect() {
 
     // When a message arrives, console.log it
     this.mqttClient.on('message', function (topic, message) {
-    console.log(message.toString());
+      const response = this.loginController.login(message)
+      sendMessage(response)
     });
 
   }
 
   // Sends a mqtt message to topic: mytopic
 sendMessage(message) {
-    this.mqttClient.publish('mytopic', message);
+    this.mqttClient.publish('response/login', message);
   }
 }
 
