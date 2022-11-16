@@ -4,7 +4,6 @@ const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
 const history = require('connect-history-api-fallback');
-const controller = require('./controller')
 const bodyParser = require("body-parser");
 const mqttHandler = require('./controller/mqtt-handler');
 
@@ -62,7 +61,8 @@ function addRoutesToApp(app) {
         res.json({ 'message': 'Welcome to your Distributed Systems Baby' });
     });
 
-    app.use(controller)
+    const loginController = require('./controller/loginController')
+    app.use(loginController)
 
     // Catch all non-error handler for api (i.e., 404 Not Found)
     app.use('/api/*', function (req, res) {
