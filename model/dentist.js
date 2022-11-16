@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const dentistSchema = new mongoose.Schema({
-    clinicId: {type: String},
+    clinicId: {type: String, required: true},
     name: {
         type: String,
         required: true,
