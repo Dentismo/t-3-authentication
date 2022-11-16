@@ -9,4 +9,4 @@ const dentistSchema = new mongoose.Schema({
     token: {type: String}
 });
 
-module.exports = mongoose.model("landingpages", dentistSchema);
+module.exports = mongoose.model('dentist', dentistSchema);

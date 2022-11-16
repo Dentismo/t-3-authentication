@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
 const history = require('connect-history-api-fallback');
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
 const mqttHandler = require('./controller/mqttHandler');
 
 const mongoURI = 'mongodb://127.0.0.1:27017/dentistClinicDB';
@@ -77,8 +77,7 @@ function addFrontendToApp(app) {
 }
 
 function addErrorHandlerToApp(app, env) {
-    // eslint-disable-next-line no-unused-consts
-    app.use(function (err, req, res, next) {
+    app.use(function (err, req, res) {
         console.error(err.stack);
         const err_res = {
             'message': err.message,
@@ -95,15 +94,15 @@ function addErrorHandlerToApp(app, env) {
 
 function addMqtt(app){
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: true }))
+    app.use(bodyParser.urlencoded({ extended: true }));
     
     const mqttClient = new mqttHandler();
     mqttClient.connect();
     
     // Routes
-    app.post("/send-mqtt", function(req, res) {
-      mqttClient.sendMessage(req.body.message);
-      res.status(200).send("Message sent to mqtt");
+    app.post('/send-mqtt', function(req, res) {
+        mqttClient.sendMessage(req.body.message);
+        res.status(200).send('Message sent to mqtt');
     });
 }
 
