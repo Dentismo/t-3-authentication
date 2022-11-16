@@ -7,6 +7,8 @@ class MqttHandler {
         this.host = 'http://localhost:1883';
         this.username = 'YOUR_USER'; // mqtt credentials if these are needed to connect
         this.password = 'YOUR_PASSWORD';
+        this.subscribeTopic = 'request/login';
+        this.publishTopic = 'response/login';
     }
 
     connect() {
@@ -21,11 +23,11 @@ class MqttHandler {
 
         // Connection callback
         this.mqttClient.on('connect', () => {
-            console.log('mqtt client connected');
+            console.log(`Mqtt Client connected, Subscribed to ${this.subscribeTopic}`);
         });
 
         // mqtt subscriptions
-        this.mqttClient.subscribe('mytopic', {qos: 0});
+        this.mqttClient.subscribe(this.subscribeTopic, {qos: 1});
 
         // When a message arrives, console.log it
         this.mqttClient.on('message', function (topic, message) {
@@ -37,7 +39,7 @@ class MqttHandler {
 
     // Sends a mqtt message to topic: mytopic
     sendMessage(message) {
-        this.mqttClient.publish('response/login', message);
+        this.mqttClient.publish(this.publishTopic, message);
     }
 }
 
