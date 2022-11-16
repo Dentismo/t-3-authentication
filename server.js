@@ -5,6 +5,8 @@ const path = require('path');
 const cors = require('cors');
 const history = require('connect-history-api-fallback');
 const controller = require('./controller')
+const bodyParser = require("body-parser");
+const mqttHandler = require('./controller/mqtt-handler');
 
 const mongoURI = 'mongodb://127.0.0.1:27017/dentistClinicDB';
 const port = 3008;
@@ -29,6 +31,7 @@ function startApp(port) {
     const app = setupApp();
     addRoutesToApp(app);
     addFrontendToApp(app);
+    addMqtt(app);
 
     // Error handler (i.e., when exception is thrown) must be registered last
     const env = app.get('env');
@@ -93,3 +96,18 @@ function addErrorHandlerToApp(app, env) {
         res.json(err_res);
     });
 }
+
+function addMqtt(app){
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }))
+    
+    const mqttClient = new mqttHandler();
+    mqttClient.connect();
+    
+    // Routes
+    app.post("/send-mqtt", function(req, res) {
+      mqttClient.sendMessage(req.body.message);
+      res.status(200).send("Message sent to mqtt");
+    });
+}
+
