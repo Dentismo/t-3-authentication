@@ -30,14 +30,14 @@ class MqttHandler {
       console.log(`Mqtt Client connected, Subscribed to '${this.subscribeTopic}'`);
     });
 
-    // mqtt subscriptions
+    // Subscribe the 'request/login' to receive login requests from dentists
     this.mqttClient.subscribe(this.subscribeTopic, {qos: 1});
 
     // When a message arrives, console.log it
-    this.mqttClient.on('message', function (topic, message) {
+    this.mqttClient.on('message', async function (topic, message) {
       console.log(message);
-      const response = login(message);
-      this.sendMessage(response);
+      const response = await login(message);
+      this.mqttClient.publish(this.publishTopic, message);
       console.log(response);
     });
 
