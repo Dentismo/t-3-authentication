@@ -6,7 +6,7 @@ const Dentist = require('../model/dentist');
 const login = async (message) => {
   try {
     //receive string mqtt message and parse to object
-    const {email, password} = JSON.parse(message);
+    const {email, password} = message;
 
     if (!(email && password)) {
       //faulty login attempt

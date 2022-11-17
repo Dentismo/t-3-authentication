@@ -19,6 +19,8 @@ class MqttHandler {
       console.log(error);
     }
 
+    const localMqttClient = this.mqttClient;
+
     // Mqtt error calback
     this.mqttClient.on('error', (err) => {
       console.log(err);
@@ -35,9 +37,9 @@ class MqttHandler {
 
     // When a message arrives, console.log it
     this.mqttClient.on('message', async function (topic, message) {
-      console.log(message);
-      const response = await login(message);
-      this.mqttClient.publish(this.publishTopic, message);
+      console.log(message.toString());
+      const response = await login(message.toJSON);
+      localMqttClient.publish(this.publishTopic, response);
       console.log(response);
     });
 
