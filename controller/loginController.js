@@ -13,7 +13,7 @@ const login = async (message) => {
       return '{message: "Invalid Credentials"}';
     }
 
-    const dentist = Dentist.findOne({email: email});
+    const dentist = await Dentist.findOne({email: email});
 
     //dentist with given email doesn't exist
     if(!dentist) return '{message: "Dentist could not be found with given email"}';
