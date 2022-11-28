@@ -6,6 +6,8 @@ const cors = require('cors');
 const history = require('connect-history-api-fallback');
 const bodyParser = require('body-parser');
 const mqttHandler = require('./controller/mqttHandler');
+require('dotenv').config();
+
 
 const mongoURI = 'mongodb://127.0.0.1:27017/dentistClinicDB';
 const port = 3008;
@@ -98,11 +100,5 @@ function addMqtt(app){
     
   const mqttClient = new mqttHandler();
   mqttClient.connect();
-    
-  // Routes
-  app.post('/send-mqtt', function(req, res) {
-    mqttClient.sendMessage(req.body.message);
-    res.status(200).send('Message sent to mqtt');
-  });
 }
 

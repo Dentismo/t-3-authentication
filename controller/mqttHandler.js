@@ -8,7 +8,6 @@ class MqttHandler {
     this.username = 'YOUR_USER'; // mqtt credentials if these are needed to connect
     this.password = 'YOUR_PASSWORD';
     this.subscribeTopic = 'request/login';
-    this.publishTopic = 'response/login';
   }
 
   connect() {
@@ -39,15 +38,10 @@ class MqttHandler {
     this.mqttClient.on('message', async function (topic, message) {
       console.log(message.toString());
       const response = await login(JSON.parse(message.toString()));
-      localMqttClient.publish(this.publishTopic, response);
+      localMqttClient.publish('response/login', response);
       console.log(response);
     });
 
-  }
-
-  // Sends a mqtt message to topic: mytopic
-  sendMessage(message) {
-    this.mqttClient.publish(this.publishTopic, message);
   }
 }
 
