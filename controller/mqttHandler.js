@@ -38,8 +38,9 @@ class MqttHandler {
     // When a message arrives, console.log it
     this.mqttClient.on('message', async function (topic, message) {
       console.log(message.toString());
+      console.log('//');
       const response = await login(JSON.parse(message.toString()));
-      localMqttClient.publish(this.publishTopic, response);
+      localMqttClient.publish('response/login', response);
       console.log(response);
     });
 
