@@ -10,13 +10,13 @@ const login = async (message) => {
 
     if (!(email && password)) {
       //faulty login attempt
-      return '{message: "Invalid Credentials"}';
+      return {message: 'Invalid Credentials'};
     }
 
     const dentist = await Dentist.findOne({email: email});
 
     //dentist with given email doesn't exist
-    if(!dentist) return '{message: "Dentist could not be found with given email"}';
+    if(!dentist) return {message: 'Dentist could not be found with given email'};
 
     //start sign in process and approve authentication
     if (bcrypt.compare(password, dentist.password)) {
@@ -29,10 +29,10 @@ const login = async (message) => {
       );
       dentist.token = token;
 
-      return `{token: ${dentist.token}, id: ${dentist._id}, clinicId: ${dentist.clinicId}}`; 
+      return {token: dentist.token, id: dentist._id, clinicId: dentist.clinicId}; 
 
     } else {
-      return '{message: "Incorrect Credentials"}';
+      return {message: 'Incorrect Credentials'};
     }
   } catch (error) {
     console.log(error);
