@@ -19,8 +19,32 @@ This sequence diagram reflects the use case of a user trying to login to their a
 5. Try logging in via the client to see successful interaction between the two components
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+This component is all about receiving credentials from the user and checking them via the backend of the system to make sure that the credentials exisit in the database and verify that the person is allowed to login. An example of what can be sent to the component looks like this:
+```
+{
+    email: "example123@gmail.com"
+    password: "24hjwb134bwnbj13b4jdwb234"
+}
+```
+In the example above, the password arrives at the component hashed using the bcrypt library so as to never reveal the password in any package being sent from component to component. 
 
+There are two output examples. One being the success message:
+```
+{
+    id: "q3423hgw39234rfn23"
+    token: "24df7s89df78sd7f9ssd0f7ds"
+    clinicId: "1dsfsdg889sdf8f9dfsf"
+}
+```
+Here it sends back the relevant information needed for fetching the relevant bookings and dentist when progressing to the dashboard page. These details are not shown to the user in the frontend but are saved to localstorage for safe keeping and retrieval for checking if person is logged in and data queries
+
+Or in the case that the credentials do not exist in the database
+```
+{
+    message: "Incorrect Credentials"
+}
+```
+This message is what is not shown directly to the user but is checked for by the system to show the apporiopriate UI response upon the unsuccessful login attempt
 ## Support
 Developer of the component: [@zsolnai](https://git.chalmers.se/zsolnai) <br>
 Clickable email: <a href="mailto:niru23@yahoo.com?Subject=Authentication%20Component" target="_blank">georg.zsolnai123@gmail.com</a>
