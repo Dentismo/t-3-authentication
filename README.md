@@ -9,7 +9,7 @@ On some READMEs, you may see small images that convey metadata, such as whether 
 ## Visuals
 ### Sequence Diagram
 This sequence diagram reflects the use case of a user trying to login to their account via the Login Page in the Client.
-![image.png](./sequenceDiagram.png)
+![sequenceDiagram.png](./sequenceDiagramFinal.png)
 
 ## Installation
 1. Clone Repository
