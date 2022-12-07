@@ -7,7 +7,7 @@ class MqttHandler {
     this.host = 'http://localhost:1883';
     this.username = 'YOUR_USER'; // mqtt credentials if these are needed to connect
     this.password = 'YOUR_PASSWORD';
-    this.subscribeTopic = 'request/login/*';
+    this.subscribeTopic = 'request/login/+';
   }
 
   connect() {
