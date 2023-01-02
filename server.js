@@ -9,7 +9,7 @@ const mqttHandler = require('./controller/mqttHandler');
 require('dotenv').config();
 
 
-const mongoURI = 'mongodb://127.0.0.1:27017/dentistClinicDB';
+const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/dentistClinicDB';
 const port = 3008;
 
 connectToDatabase(mongoURI);

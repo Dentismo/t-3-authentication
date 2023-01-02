@@ -19,7 +19,7 @@ const login = async (message) => {
     if(!dentist) return {message: 'Dentist could not be found with given email'};
 
     //start sign in process and approve authentication
-    if (bcrypt.compare(password, dentist.password)) {
+    if (await bcrypt.compare(password, dentist.password)) {
       const token = jwt.sign(
         { clinicId: dentist.clinicId },
         process.env.JWT_KEY,
